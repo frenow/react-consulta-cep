@@ -5,33 +5,35 @@ import axios from "axios";
 const App = () => {
 
   const[endereco, setEndereco] = useState([]);
-  const[logradouro, setLogradouro] = useState();
+  
+  let logradouro;
   
 
   function inputOnChange(event) {
+    console.log('input');
     if (!event.target.value) {
       return;
     }
-    fetchMovies(event.target.value);
+    fetchEnderecos(event.target.value);
   }
 
   function downshiftOnChange(selectedMovie) {
     alert(`your favourite movie is ${selectedMovie.title}`);
   }  
 
-  function fetchMovies(rua) {
-    const viacepURL = `viacep.com.br/ws/MG/Belo Horizonte/${rua}/json/`;
+  function fetchEnderecos(rua) {
+    console.log('fetch');
+    const viacepURL = `https://viacep.com.br/ws/MG/Belo Horizonte/${rua}/json/`;
     axios.get(viacepURL).then(response => {
-      setEndereco(response.data);
-      
-      console.log(endereco);
+      //setEndereco(response.data);      
+      console.log(response.data);
     });
   }  
   return (
     <div className="App">
       <Downshift
         onChange={downshiftOnChange}
-        itemToString={item => (item ? logradouro : "")}
+        itemToString={item => (item ? endereco.logradouro : "")}
       >
         {({
           selectedItem,
@@ -58,7 +60,8 @@ const App = () => {
             />
             {isOpen ? (
               <div className="downshift-dropdown">
-                {endereco.logradouro
+{/*
+{endereco.logradouro
                   .filter(
                     item =>
                       !inputValue ||
@@ -79,7 +82,8 @@ const App = () => {
                     >
                       {item.logradouro}
                     </div>
-                  ))}
+                  ))} */}
+
               </div>
             ) : null}
           </div>
